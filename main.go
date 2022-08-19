@@ -1081,9 +1081,7 @@ func handleProfileList(device ios.DeviceEntry) {
 func startForwarding(device ios.DeviceEntry, hostPort int, targetPort int) {
 	err := forward.Forward(device, uint16(hostPort), uint16(targetPort))
 	exitIfError("failed to forward port", err)
-	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt)
-	<-c
+        waitForInterrupt()
 }
 
 func printDiagnostics(device ios.DeviceEntry) {
